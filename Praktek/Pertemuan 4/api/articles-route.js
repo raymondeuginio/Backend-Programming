@@ -8,7 +8,6 @@ module.exports = (app) => {
 
 const articleList = [];
 route.get('/', (request, response) => {
-
     if  (articleList.length === 0) {
         response.status(404).json({ message: 'Belom ada article yang di-post' });
     } else {

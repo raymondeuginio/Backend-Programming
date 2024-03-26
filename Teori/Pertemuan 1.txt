@@ -1,0 +1,25 @@
+- Javascript bisa jalan di server kalo  ada node-js, kalo ga cuman bisa di browser.
+
+- Inspect --> Console --> Default Levels --> Uncheck Error.
+
+- Buat coba codingan js di web, bisa pake jsfiddle.
+
+- Di JS ada yang namanya Dynamic Typing (gausah declare tipe data int, string, dll) jadi lebih gampang buat ganti ganti
+
+- Kalo sebelum nama variable kita pake 'let' itu bisa diganti-ganti tipe datanya. Kalo 'const' itu gabisa diganti ganti.
+
+- String dan number bisa digabung (JS nya bisa ubah number jadi string sendir, jadi bisa diconcat)
+
+- Primitive data type di JS most likely sama kek Java.
+
+- Apa beda undefined sama null? Kalo undefined itu kayak void (kalo return nya gaada value, berarti undefined)
+
+- Di JS gaada int, long, float dll. Tapi semua dirangkap jadi 1 tipe data yaitu number. Number bisa store -(2^53 - 1) to 2^53 - 1 angka. Kalo perlu lebih bisa pake BigInt.
+
+- String di JS udah support unicode (udah bisa hasilin output selain alfabet kek emoji dll)
+
+- Di JS nulis string bisa pake "", '', dan ``
+
+- $ bisa ditaro sebelom variable yang mau kita cetak biar gausah ribet. (Contoh : const str3 = `string text ${expression} string text`;)
+
+- Ada 2 comparison. == dipake buat bandingin value doang. Kalo === dipake buat bandingin value + tipe data.

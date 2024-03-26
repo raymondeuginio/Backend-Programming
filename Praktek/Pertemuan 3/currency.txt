@@ -1,0 +1,17 @@
+const currency = require('currency.js');
+
+function calculateTotal(quantity, unitPrice, discountPercentage, taxPercentage) {
+	const subtotal = quantity * unitPrice;
+  const discount = subtotal * discountPercentage;
+  const tax = (subtotal - discount) * taxPercentage;
+  return subtotal - discount + tax;
+}
+
+const totalPurchase = calculateTotal(5, 2.51, 5.5, 11);
+console.log("Total purchase = " + currency(totalPurchase).format());
+
+const totalPayment = 1000;
+console.log("Total payment = " + currency(totalPayment).format());
+
+const change = totalPayment - totalPurchase;
+console.log("Change = " + currency(change).format());

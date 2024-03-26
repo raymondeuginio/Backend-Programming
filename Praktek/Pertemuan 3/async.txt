@@ -1,0 +1,26 @@
+const delay = (delayTime) => {
+    return new Promise((resolve) => {
+      setTimeout(resolve, delayTime);
+    });
+  };
+  
+  const aPromise = async () => {
+    try {
+      const delayTime = 10000;
+      console.log(`Please wait for ${delayTime / 1000} secs...`);
+      await delay(delayTime);
+      return "Success!";
+    } catch (err) {
+      throw err;
+    }
+  };
+  
+  (async () => {
+    try {
+      const successMessage = await aPromise();
+      console.log(`Yay! ${successMessage}`);    
+    } catch (error) {
+      console.log(`Error! ${error}`);
+    }
+  })();
+  
