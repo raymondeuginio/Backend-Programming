@@ -1,4 +1,5 @@
 const express = require('express');
+const Article = require('./articles-mongo');
 
 const route = express.Router();
 
@@ -16,17 +17,21 @@ route.get('/', (request, response) => {
     }
 });
 
-route.post('/', (request, response) => {
-    const tanggal = new Date();
-    const article = {
+route.post('/', async (request, response) => {
+    try{
+    const article = await Article.create({
         id: request.body.id,
         author: request.body.author,
         title: request.body.title,
         content: request.body.content,
-        datetime: tanggal
-    };
-    articleList.push(article);
-    return response.status(201).json(article);
+        datetime: new Date().toISOString(),
+    });
+    console.log(article);
+    return response.status(200).json(article);
+    } catch (error) {
+        console.error('Error saving Article:', error);
+        return response.status(500).json({ error: 'Error saving article' });
+    }
 });
 
 route.get('/:id', (req, res) => {
