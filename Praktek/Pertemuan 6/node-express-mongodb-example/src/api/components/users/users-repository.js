@@ -53,6 +53,10 @@ async function updateUser(id, name, email) {
   );
 }
 
+async function checkEmailUser(email) {
+  return User.findOne({ email: email });
+  }
+
 /**
  * Delete a user
  * @param {string} id - User ID
@@ -68,4 +72,8 @@ module.exports = {
   createUser,
   updateUser,
   deleteUser,
+  checkEmailUser,
 };
+
+
+

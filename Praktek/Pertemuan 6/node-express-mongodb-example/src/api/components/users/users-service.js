@@ -85,6 +85,14 @@ async function updateUser(id, name, email) {
   return true;
 }
 
+async function checkEmailUser(email) {
+  try {
+    return await usersRepository.checkEmailUser(email);
+  } catch (err) {
+    return null;
+  }
+}
+
 /**
  * Delete user
  * @param {string} id - User ID
@@ -113,4 +121,5 @@ module.exports = {
   createUser,
   updateUser,
   deleteUser,
+  checkEmailUser,
 };

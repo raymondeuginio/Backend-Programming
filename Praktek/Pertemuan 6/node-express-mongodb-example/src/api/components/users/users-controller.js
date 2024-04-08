@@ -51,6 +51,15 @@ async function createUser(request, response, next) {
     const email = request.body.email;
     const password = request.body.password;
 
+    const emailKeambil = await usersService.checkEmailUser(email);
+
+    if (emailKeambil !== null){
+      throw errorResponder(
+        errorTypes.EMAIL_ALREADY_TAKEN,
+        'Use another email'
+      );
+    }
+
     const success = await usersService.createUser(name, email, password);
     if (!success) {
       throw errorResponder(
@@ -78,6 +87,16 @@ async function updateUser(request, response, next) {
     const name = request.body.name;
     const email = request.body.email;
 
+    const emailKeambil = await usersService.checkEmailUser(email);
+    
+    if(emailKeambil !== null){
+      throw errorResponder(
+        errorTypes.EMAIL_ALREADY_TAKEN,
+        'Use another email'
+      );
+    }
+
+    
     const success = await usersService.updateUser(id, name, email);
     if (!success) {
       throw errorResponder(
