@@ -66,6 +66,20 @@ async function deleteUser(id) {
   return User.deleteOne({ _id: id });
 }
 
+
+async function cekPassword(id, old_password) {
+  const user = await getUser(id);
+  if (!user) {
+    return false;
+  } else {
+  return user.comparePassword(old_password);
+  }
+} 
+
+async function updatePassword(id, new_password) {
+  return User.findByIdAndUpdate(id, { password: new_password });
+}
+
 module.exports = {
   getUsers,
   getUser,
@@ -73,6 +87,8 @@ module.exports = {
   updateUser,
   deleteUser,
   checkEmailUser,
+  cekPassword,
+  updatePassword,
 };
 
 

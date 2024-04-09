@@ -1,5 +1,6 @@
 const usersService = require('./users-service');
 const { errorResponder, errorTypes } = require('../../../core/errors');
+const { changePassword } = require('./users-validator');
 
 /**
  * Handle get list of users request
@@ -143,10 +144,40 @@ async function deleteUser(request, response, next) {
   }
 }
 
+
+async function changePassA(request, response, next) {
+  try{
+    const id = request.params.id;
+    const old_password = request.params.old_password;
+    const new_password = request.body.new_password;
+    const password_confirm = request.body.password_confirm;
+
+    if (new_password === password_confirm) {
+      const success = await usersService.changePass(id, old_password, new_password);
+      if (!success) {
+        throw errorResponder(
+          errorTypes.UNPROCESSABLE_ENTITY,
+          'Failed to change password'
+        );
+      }
+      return response.status(200).json({ id });
+    } else {
+      throw errorResponder(
+        errorTypes.INVALID_PASSWORD,
+        "Please make sure the new passwords you've entered are the same"
+      );
+    }
+  } catch (error){
+    return next(error);
+  }
+
+}
+
 module.exports = {
   getUsers,
   getUser,
   createUser,
   updateUser,
   deleteUser,
+  changePassA,
 };

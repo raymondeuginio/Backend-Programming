@@ -1,5 +1,6 @@
 const usersRepository = require('./users-repository');
 const { hashPassword } = require('../../../utils/password');
+const { changePassword } = require('./users-validator');
 
 /**
  * Get list of users
@@ -115,6 +116,26 @@ async function deleteUser(id) {
   return true;
 }
 
+async function changePass(id, old_password, new_password){
+  try {
+    const user = await usersRepository.getUser(id);
+
+    if(!user){
+      return null;
+    }
+    
+    const cekPasswordLama = usersRepository.cekPassword(old_password);
+    if(!cekPasswordLama){
+      return null;
+    } 
+
+    await usersRepository.updatePassword(id, new_password);
+    return true;
+  } catch (err){
+    return null;
+  }
+}
+
 module.exports = {
   getUsers,
   getUser,
@@ -122,4 +143,5 @@ module.exports = {
   updateUser,
   deleteUser,
   checkEmailUser,
+  changePass,
 };
