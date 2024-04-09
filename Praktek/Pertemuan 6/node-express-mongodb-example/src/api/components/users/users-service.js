@@ -48,7 +48,7 @@ async function getUser(id) {
  * @param {string} password - Password
  * @returns {boolean}
  */
-async function createUser(name, email, password) {
+async function createUser(name, email, password, cpassword) {
   // Hash password
   const hashedPassword = await hashPassword(password);
 
