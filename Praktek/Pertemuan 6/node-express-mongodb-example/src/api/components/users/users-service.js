@@ -116,21 +116,23 @@ async function deleteUser(id) {
   return true;
 }
 
-async function changePass(id, old_password, new_password){
+async function changePassA(id, old_password, new_password){
   try {
     const user = await usersRepository.getUser(id);
 
     if(!user){
       return null;
     }
-    
-    const cekPasswordLama = usersRepository.cekPassword(old_password);
-    if(!cekPasswordLama){
-      return null;
-    } 
+    const hashedPassword = await hashPassword(old_password)
+    const hashedNewPassword = await hashPassword(new_password)
 
-    await usersRepository.updatePassword(id, new_password);
-    return true;
+    const cekPasswordLama = usersRepository.cekPassword(hashedPassword);
+    if(cekPasswordLama){
+      return await usersRepository.updatePassword(id, hashedNewPassword);;
+    } else {
+      return null;
+    }
+
   } catch (err){
     return null;
   }
@@ -143,5 +145,5 @@ module.exports = {
   updateUser,
   deleteUser,
   checkEmailUser,
-  changePass,
+  changePassA,
 };

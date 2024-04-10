@@ -1,5 +1,5 @@
 const { User } = require('../../../models');
-
+const { cekPassword } = require('../../../utils/password');
 /**
  * Get a list of users
  * @returns {Promise}
@@ -67,18 +67,9 @@ async function deleteUser(id) {
 }
 
 
-async function cekPassword(id, old_password) {
-  const user = await getUser(id);
-  if (!user) {
-    return false;
-  } else {
-  return user.comparePassword(old_password);
-  }
+async function cekPassword(id, hashedPassword) {
+  return bcrypt.compareSync(password, hashedPassword);
 } 
-
-async function updatePassword(id, new_password) {
-  return User.findByIdAndUpdate(id, { password: new_password });
-}
 
 module.exports = {
   getUsers,

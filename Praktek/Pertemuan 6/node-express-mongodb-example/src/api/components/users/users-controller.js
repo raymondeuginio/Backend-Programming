@@ -148,7 +148,7 @@ async function deleteUser(request, response, next) {
 async function changePassA(request, response, next) {
   try{
     const id = request.params.id;
-    const old_password = request.params.old_password;
+    const old_password = request.body.old_password;
     const new_password = request.body.new_password;
     const password_confirm = request.body.password_confirm;
 
