@@ -40,6 +40,6 @@ module.exports = (app) => {
     '/:id/change-password',
     authenticationMiddleware,
     celebrate(usersValidator.changePassword),
-    usersControllers.changePassA
+    usersControllers.changePass
   );
 };

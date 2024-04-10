@@ -145,15 +145,26 @@ async function deleteUser(request, response, next) {
 }
 
 
-async function changePassA(request, response, next) {
+async function changePass(request, response, next) {
   try{
     const id = request.params.id;
     const old_password = request.body.old_password;
     const new_password = request.body.new_password;
-    const password_confirm = request.body.password_confirm;
+    const new_password_confirm = request.body.new_password_confirm;
 
-    if (new_password === password_confirm) {
-      const success = await usersService.changePass(id, old_password, new_password);
+
+    const cekPassword = await usersService.cekPass(id, old_password);
+
+    if(!cekPassword){
+      throw errorResponder(
+        errorTypes.INVALID_PASSWORD,
+        'The password you entered does not match the current password'
+      );
+    }
+
+
+    if (new_password === new_password_confirm) {
+      const success = await usersService.changePass(id, new_password);
       if (!success) {
         throw errorResponder(
           errorTypes.UNPROCESSABLE_ENTITY,
@@ -179,5 +190,5 @@ module.exports = {
   createUser,
   updateUser,
   deleteUser,
-  changePassA,
+  changePass,
 };

@@ -67,9 +67,12 @@ async function deleteUser(id) {
 }
 
 
-async function cekPassword(id, hashedPassword) {
-  return bcrypt.compareSync(password, hashedPassword);
-} 
+async function updatePassword(id, new_password) {
+  return User.updateOne(
+    { _id: id }, 
+    { $set: { password: new_password } }
+  );
+}
 
 module.exports = {
   getUsers,
@@ -78,7 +81,6 @@ module.exports = {
   updateUser,
   deleteUser,
   checkEmailUser,
-  cekPassword,
   updatePassword,
 };
 

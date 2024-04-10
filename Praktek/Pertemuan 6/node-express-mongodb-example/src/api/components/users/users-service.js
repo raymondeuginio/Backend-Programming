@@ -1,5 +1,5 @@
 const usersRepository = require('./users-repository');
-const { hashPassword } = require('../../../utils/password');
+const { hashPassword, passwordMatched } = require('../../../utils/password');
 const { changePassword } = require('./users-validator');
 
 /**
@@ -116,26 +116,38 @@ async function deleteUser(id) {
   return true;
 }
 
-async function changePassA(id, old_password, new_password){
+
+async function cekPass(id, password) {
+  const user = await usersRepository.getUser(id);
+
+  const userPassword = user ? user.password : '<RANDOM_PASSWORD_FILLER>';
+  const passwordUdahCek = await passwordMatched(password, userPassword);
+
+  if (passwordUdahCek) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+
+async function changePass(id, new_password){
+
+  const user = await usersRepository.getUser(id);
+
+  if(!user){
+    return null;
+  }
+  
+  const hashedNewPassword = await hashPassword(new_password)
+
   try {
-    const user = await usersRepository.getUser(id);
-
-    if(!user){
-      return null;
-    }
-    const hashedPassword = await hashPassword(old_password)
-    const hashedNewPassword = await hashPassword(new_password)
-
-    const cekPasswordLama = usersRepository.cekPassword(hashedPassword);
-    if(cekPasswordLama){
-      return await usersRepository.updatePassword(id, hashedNewPassword);;
-    } else {
-      return null;
-    }
-
+    await usersRepository.updatePassword(id, hashedNewPassword);
   } catch (err){
     return null;
   }
+
+  return true;
 }
 
 module.exports = {
@@ -145,5 +157,6 @@ module.exports = {
   updateUser,
   deleteUser,
   checkEmailUser,
-  changePassA,
+  changePass,
+  cekPass,
 };
