@@ -146,7 +146,7 @@ async function deleteUser(request, response, next) {
 
 
 async function changePass(request, response, next) {
-  try{
+try{
     const id = request.params.id;
     const old_password = request.body.old_password;
     const new_password = request.body.new_password;
@@ -171,8 +171,8 @@ async function changePass(request, response, next) {
           'Failed to change password'
         );
       }
-      return response.status(200).json({ id });
-    } else {
+      return response.status(200).json({ id, message: 'Password changed!' });
+      } else {
       throw errorResponder(
         errorTypes.INVALID_PASSWORD,
         "Please make sure the new passwords you've entered are the same"
